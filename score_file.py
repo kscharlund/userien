@@ -39,15 +39,25 @@ def score_result(result):
     return position_points + time_points
 
 
-def main():
-    tree = ET.parse(sys.argv[1])
+def scores_for_file(file_or_path):
+    tree = ET.parse(file_or_path)
     root = tree.getroot()
+    scores = {}
     for class_result in map(parse_class_result, root.findall("iof:ClassResult", NS)):
-        if class_result["class_name"] not in COMPETITION_CLASSES:
-            continue
-        print(class_result["class_name"])
-        for result in class_result["results"]:
-            print(f'{result["name"]}, {result["team"]}: {score_result(result)}')
+        if class_result["class_name"] in COMPETITION_CLASSES:
+            scores[class_result["class_name"]] = [
+                dict(score=score_result(result), **result)
+                for result in class_result["results"]
+            ]
+    return scores
+
+
+def main():
+    scores = scores_for_file(sys.argv[1])
+    for class_name, class_results in scores.items():
+        print(class_name)
+        for result in class_results:
+            print(f'{result["name"]}, {result["team"]}: {result["score"]}')
         print()
 
 
