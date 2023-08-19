@@ -49,11 +49,12 @@ def scores_for_file(file_or_path):
                 dict(score=score_result(result), **result)
                 for result in class_result["results"]
             ]
-    return scores
+    return root.find("iof:Event/iof:Name", NS).text, scores
 
 
 def main():
-    scores = scores_for_file(sys.argv[1])
+    event_name, scores = scores_for_file(sys.argv[1])
+    print(event_name)
     for class_name, class_results in scores.items():
         print(class_name)
         for result in class_results:

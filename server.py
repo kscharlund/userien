@@ -16,19 +16,15 @@ def save_uploaded_file(result_file: FileUpload):
 
 @route("/", method="GET")
 def root():
-    return """
-<form action="results" method="post" enctype="multipart/form-data">
-  Resultat-fil i IOF XML-format: <input type="file" name="result_file" />
-  <input type="submit" value="Ladda upp" />
-</form>
-"""
+    return template("index")
 
 
 @route("/results", method="POST")
 def upload():
     result_file: FileUpload = request.files.get("result_file")
     save_uploaded_file(result_file)
-    return template("results", scores=scores_for_file(result_file.file))
+    event_name, scores = scores_for_file(result_file.file)
+    return template("results", event_name=event_name, scores=scores)
 
 
 if __name__ == "__main__":
