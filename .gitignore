@@ -1,3 +1,4 @@
 .vscode
 eventor-api-key.txt
 tmp
+__pycache__
