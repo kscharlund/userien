@@ -1,6 +1,5 @@
-from pprint import pprint
 import sys
-import xml.etree.ElementTree as ET
+import defusedxml.ElementTree as ET
 
 NS = {"iof": "http://www.orienteering.org/datastandard/3.0"}
 COMPETITION_CLASSES = {"D10", "D12", "D14", "H10", "H12", "H14"}
