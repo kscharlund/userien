@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import os
 from pprint import pprint
 import time
@@ -28,4 +30,4 @@ def upload():
 
 
 if __name__ == "__main__":
-    run()
+    run(host='0.0.0.0')
