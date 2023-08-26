@@ -87,4 +87,4 @@ def upload():
 
 
 if __name__ == "__main__":
-    run(server="bjoern", host="0.0.0.0", port=8080)
+    run(server="cheroot", host="0.0.0.0", port=8080)
