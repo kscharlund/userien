@@ -10,9 +10,11 @@ def score_result(result):
         return 0
     if result["position"] is None:
         return 1
+    # TODO: This is how it works on Eventor. Clarify rules?
+    # I initially assumed time_points should always be at least 1.
     position_points = max(0, 6 - result["position"])
-    time_points = max(1, 10 - int(result["time_behind"] // 180))
-    return position_points + time_points
+    time_points = max(0, 10 - int(result["time_behind"] // 180))
+    return max(1, position_points + time_points)
 
 
 def scored_class_result(class_result, other_event_results):
