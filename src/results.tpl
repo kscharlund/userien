@@ -19,6 +19,9 @@
             <th>Klubb</th>
             <th>Poäng</th>
             <th>Poäng, totalt</th>
+            <th>Antal tävlingar</th>
+            <th>Fjärde resultat</th>
+            <th>Femte resultat</th>
         </tr>
         % for result in results:
         <tr>
@@ -26,6 +29,9 @@
             <td>{{result["team"]}}</td>
             <td>{{result.get("current_score", "")}}</td>
             <td>{{result["total_score"]}}</td>
+            <td>{{result["num_competitions"]}}</td>
+            <td>{{result["fourth_score"]}}</td>
+            <td>{{result["fifth_score"]}}</td>
         </tr>
         % end
     </table>

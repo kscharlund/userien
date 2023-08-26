@@ -28,19 +28,36 @@ def make_class_result_tables(current_event_result, previous_event_results):
                 continue
             class_results = event_result["class_results"][class_name]
             for person_id, result in class_results["results"].items():
-                total_score.setdefault(person_id, []).append(score_result(result))
-                class_rows[person_id] = {
-                    "name": result["person_name"],
-                    "team": result["team"],
-                }
+                score = score_result(result)
+                if score:
+                    total_score.setdefault(person_id, []).append(score)
+                    class_rows[person_id] = {
+                        "name": result["person_name"],
+                        "team": result["team"],
+                    }
         for person_id, result in current_event_result["class_results"][class_name][
             "results"
         ].items():
             class_rows[person_id]["current_score"] = score_result(result)
         for person_id, point_list in total_score.items():
-            class_rows[person_id]["total_score"] = sum(sorted(point_list)[-3:])
+            sorted_points = sorted(point_list, reverse=True)
+            class_rows[person_id]["total_score"] = sum(sorted_points[:3])
+            class_rows[person_id]["num_competitions"] = len(sorted_points)
+            class_rows[person_id]["fourth_score"] = int(
+                len(sorted_points) > 3 and sorted_points[3]
+            )
+            class_rows[person_id]["fifth_score"] = int(
+                len(sorted_points) > 4 and sorted_points[4]
+            )
         tables[class_name] = sorted(
-            class_rows.values(), key=lambda x: x["total_score"], reverse=True
+            class_rows.values(),
+            key=lambda x: (
+                x["total_score"],
+                x["num_competitions"],
+                x["fourth_score"],
+                x["fifth_score"],
+            ),
+            reverse=True,
         )
     return tables
 
