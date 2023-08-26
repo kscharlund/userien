@@ -5,7 +5,7 @@ import time
 from bottle import FileUpload, route, run, request, template
 
 from parse_iof_xml import parse_iof_xml_result_list
-from scoring import scored_class_result
+from scoring import COMPETITION_CLASSES, scored_class_result
 
 LOG_DIR = os.path.join(os.path.dirname(__file__), "tmp", "uploads")
 
@@ -33,6 +33,7 @@ def upload():
         class_results=[
             scored_class_result(class_result)
             for class_result in result_list["class_results"]
+            if class_result["class_name"] in COMPETITION_CLASSES
         ],
     )
 
