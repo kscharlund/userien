@@ -7,11 +7,11 @@ Ungdomsserien i Linköping. OBS: Poängställningen är inte officiell.
 
 För att bygga och starta servern:
 ```
-$ ./dockerbuild.sh && ./dockerup.sh
+./dockerbuild.sh && ./dockerup.sh
 ```
 
 Det kommer att starta en Docker-container som lyssnar på port 8080.
-För att exponera den, använd en proxy-server. Exempel för nginx:
+För att exponera den, använd en reverse proxy-server. Exempel för nginx:
 
 ```
 location /userien/ {
