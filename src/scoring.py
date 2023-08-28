@@ -3,10 +3,16 @@ from parse_iof_xml import parse_iof_xml_result_list
 
 
 COMPETITION_CLASSES = {"D10", "D12", "D14", "H10", "H12", "H14"}
+# IOF XML statuses:
+# "OK", "Finished", "MissingPunch", "Disqualified", "DidNotFinish",
+# "Active", "Inactive", "OverTime", "SportingWithdrawal", "NotCompeting",
+# "Moved", "MovedUp", "DidNotStart", "DidNotEnter", "Cancelled"
+UNFINISHED_STATUSES = {"Finished", "Active", "Inactive", "OverTime"}
+NO_POINT_STATUSES = {"Moved", "MovedUp", "DidNotStart", "DidNotEnter", "Cancelled"}
 
 
 def score_result(result):
-    if result["status"] == "DidNotStart":
+    if result["status"] in NO_POINT_STATUSES:
         return 0
     if result["position"] is None:
         return 1

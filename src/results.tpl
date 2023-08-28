@@ -6,6 +6,10 @@
     td, th {
         padding: 0.1em 0.3em;
     }
+    .unfinished {
+        color: #666;
+        background: #ddd;
+    }
     </style>
 </head>
 
@@ -24,7 +28,7 @@
             <th>Femte resultat</th>
         </tr>
         % for result in results:
-        <tr>
+        <tr class="{{'unfinished' if result['unfinished'] else 'finished'}}">
             <td>{{result["name"]}}</td>
             <td>{{result["team"]}}</td>
             <td>{{result.get("current_score", "")}}</td>
