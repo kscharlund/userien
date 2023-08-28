@@ -23,15 +23,6 @@ def score_result(result):
     return max(1, position_points + time_points)
 
 
-def scored_class_result(class_result, other_event_results):
-    return class_result | {
-        "results": [
-            result | {"score": score_result(result)}
-            for result in class_result["results"]
-        ]
-    }
-
-
 def main():
     result_list = parse_iof_xml_result_list(sys.argv[1])
     print(result_list["event"]["event_name"])

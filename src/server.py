@@ -5,7 +5,7 @@ import time
 from bottle import FileUpload, route, run, request, template
 
 from parse_iof_xml import parse_iof_xml_result_list
-from scoring import COMPETITION_CLASSES, UNFINISHED_STATUSES, score_result, scored_class_result
+from scoring import UNFINISHED_STATUSES, score_result
 from storage import read_event_result_list, save_event_result_list, series_for_event
 
 LOG_DIR = os.path.join(os.path.dirname(__file__), "tmp", "uploads")
