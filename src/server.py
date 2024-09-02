@@ -39,7 +39,9 @@ def make_class_result_tables(current_event_result, previous_event_results):
         for person_id, result in current_event_result["class_results"][class_name][
             "results"
         ].items():
-            class_rows[person_id]["current_score"] = score_result(result)
+            current_score = score_result(result)
+            if current_score:
+                class_rows[person_id]["current_score"] = current_score
         for person_id, point_list in total_score.items():
             sorted_points = sorted(point_list, reverse=True)
             class_rows[person_id]["total_score"] = sum(sorted_points[:3])
