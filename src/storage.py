@@ -35,8 +35,15 @@ def open_safe_shelve(
 
 
 def series_for_event(event_id):
-    # TODO: Make dynamic.
-    return ["44027", "45014", "45486", "45015", "46473"]
+    # TODO: Make more dynamic.
+    all_series = [
+        ["44027", "45014", "45486", "45015", "46473"],  # 2023
+        ["48802", "49288", "48748", "50736", "50708", "50920"],  # 2024
+    ]
+    for series in all_series:
+        if event_id in series:
+            return series
+    return [event_id]
 
 
 def save_event_result_list(result_list):
