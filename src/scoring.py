@@ -7,7 +7,7 @@ COMPETITION_CLASSES = {"D10", "D12", "D14", "H10", "H12", "H14"}
 # "OK", "Finished", "MissingPunch", "Disqualified", "DidNotFinish",
 # "Active", "Inactive", "OverTime", "SportingWithdrawal", "NotCompeting",
 # "Moved", "MovedUp", "DidNotStart", "DidNotEnter", "Cancelled"
-UNFINISHED_STATUSES = {"Finished", "Active", "Inactive", "OverTime"}
+UNFINISHED_STATUSES = {"Finished", "Active", "Inactive"}
 NO_POINT_STATUSES = {"Moved", "MovedUp", "DidNotStart", "DidNotEnter", "Cancelled"}
 
 
