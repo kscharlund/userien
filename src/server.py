@@ -9,6 +9,7 @@ from scoring import UNFINISHED_STATUSES, score_result
 from storage import read_event_result_list, save_event_result_list, series_for_event
 
 LOG_DIR = os.path.join(os.path.dirname(__file__), "tmp", "uploads")
+EMPTY_CLASS_RESULTS = {"results": {}}
 
 
 def save_uploaded_file(result_file: FileUpload):
@@ -26,7 +27,7 @@ def make_class_result_tables(current_event_result, previous_event_results):
         for event_result in previous_event_results + [current_event_result]:
             if not event_result:
                 continue
-            class_results = event_result["class_results"][class_name]
+            class_results = event_result["class_results"].get(class_name, EMPTY_CLASS_RESULTS)
             for person_id, result in class_results["results"].items():
                 score = score_result(result)
                 if score:
@@ -36,7 +37,7 @@ def make_class_result_tables(current_event_result, previous_event_results):
                         "team": result["team"],
                         "unfinished": result["status"] in UNFINISHED_STATUSES,
                     }
-        for person_id, result in current_event_result["class_results"][class_name][
+        for person_id, result in current_event_result["class_results"].get(class_name, EMPTY_CLASS_RESULTS)[
             "results"
         ].items():
             current_score = score_result(result)
