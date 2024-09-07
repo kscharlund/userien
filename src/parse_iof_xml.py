@@ -15,8 +15,11 @@ def parse_class_result(class_result_node):
 
     person_results = {}
     for person_result_node in class_result_node.findall("iof:PersonResult", NS):
-        person_result = parse_person_result(person_result_node)
-        person_results[person_result["person_id"]] = person_result
+        try:
+            person_result = parse_person_result(person_result_node)
+            person_results[person_result["person_id"]] = person_result
+        except:
+            pass
 
     return {
         "class_name": class_name,
