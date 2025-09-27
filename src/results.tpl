@@ -40,6 +40,14 @@
         % end
     </table>
     % end
+
+    % for series in previous_competitions:
+    <p>
+        % for event_id, event_name in series:
+        <a href="{{event_id}}">{{event_name}}</a><br/>
+        % end
+    </p>
+    % end
 </body>
 
 </html>

@@ -10,6 +10,14 @@
         Resultat-fil i IOF XML-format: <input type="file" name="result_file" />
         <input type="submit" value="Ladda upp" />
     </form>
+
+    % for series in previous_competitions:
+    <p>
+        % for event_id, event_name in series:
+        <a href="result/{{event_id}}">{{event_name}}</a><br/>
+        % end
+    </p>
+    % end
 </body>
 
 </html>

@@ -2,11 +2,11 @@
 
 import os
 import time
-from bottle import FileUpload, route, run, request, template
+from bottle import FileUpload, route, run, request, template, redirect
 
 from parse_iof_xml import parse_iof_xml_result_list
 from scoring import UNFINISHED_STATUSES, score_result
-from storage import read_event_result_list, save_event_result_list, series_for_event
+from storage import ALL_SERIES, read_event_result_list, save_event_result_list, series_for_event
 
 LOG_DIR = os.path.join(os.path.dirname(__file__), "tmp", "uploads")
 EMPTY_CLASS_RESULTS = {"results": {}}
@@ -66,9 +66,20 @@ def make_class_result_tables(current_event_result, previous_event_results):
     return tables
 
 
+def get_previous_competitions():
+    res = []
+    for series in ALL_SERIES:
+        res.append([])
+        for event_id in series:
+            event = read_event_result_list(event_id)
+            if event is not None:
+                res[-1].append((event_id, event["event"]["event_name"]))
+    return res
+
+
 @route("/", method="GET")
 def root():
-    return template("index")
+    return template("index", previous_competitions=get_previous_competitions())
 
 
 @route("/results", method="POST")
@@ -77,16 +88,23 @@ def upload():
     save_uploaded_file(result_file)
     result_list = parse_iof_xml_result_list(result_file.file)
     save_event_result_list(result_list)
-    other_event_ids = series_for_event(result_list["event"]["event_id"])
+    redirect(f"results/{result_list['event']['event_id']}", code=303)
+
+
+@route("/results/<event_id>", method="GET")
+def result(event_id):
+    event_results = read_event_result_list(event_id)
+    other_event_ids = series_for_event(event_id)
     other_event_results = [
-        read_event_result_list(event_id)
-        for event_id in other_event_ids
-        if event_id != result_list["event"]["event_id"]
+        read_event_result_list(other_event_id)
+        for other_event_id in other_event_ids
+        if other_event_id != event_id
     ]
     return template(
         "results",
-        event_name=result_list["event"]["event_name"],
-        result_tables=make_class_result_tables(result_list, other_event_results),
+        event_name=event_results["event"]["event_name"],
+        result_tables=make_class_result_tables(event_results, other_event_results),
+        previous_competitions=get_previous_competitions(),
     )
 
 

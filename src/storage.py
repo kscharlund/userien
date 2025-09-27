@@ -5,6 +5,11 @@ import shelve
 import typing
 
 
+ALL_SERIES = [
+    ["44027", "45014", "45486", "45015", "46473"],  # 2023
+    ["48802", "49288", "48748", "50736", "50708", "50920"],  # 2024
+    ["53584", "54285", "54995", "53968", "53790"],  # 2025
+]
 STORAGE_DIR = os.path.join(os.path.dirname(__file__), "tmp")
 
 
@@ -36,11 +41,7 @@ def open_safe_shelve(
 
 def series_for_event(event_id):
     # TODO: Make more dynamic.
-    all_series = [
-        ["44027", "45014", "45486", "45015", "46473"],  # 2023
-        ["48802", "49288", "48748", "50736", "50708", "50920"],  # 2024
-    ]
-    for series in all_series:
+    for series in ALL_SERIES:
         if event_id in series:
             return series
     return [event_id]
