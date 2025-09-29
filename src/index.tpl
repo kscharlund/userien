@@ -14,7 +14,7 @@
     % for series in previous_competitions:
     <p>
         % for event_id, event_name in series:
-        <a href="result/{{event_id}}">{{event_name}}</a><br/>
+        <a href="results/{{event_id}}">{{event_name}}</a><br/>
         % end
     </p>
     % end
