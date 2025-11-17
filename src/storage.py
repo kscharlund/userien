@@ -1,4 +1,5 @@
 import contextlib
+import dbm
 import fcntl
 import os
 import shelve
@@ -53,5 +54,9 @@ def save_event_result_list(result_list):
 
 
 def read_event_result_list(event_id):
-    with open_safe_shelve(os.path.join(STORAGE_DIR, "events"), "r") as db:
-        return db.get(event_id, None)
+    try:
+        with open_safe_shelve(os.path.join(STORAGE_DIR, "events"), "r") as db:
+            return db.get(event_id, None)
+    except dbm.error:
+        with open_safe_shelve(os.path.join(STORAGE_DIR, "events"), "c") as db:
+            return db.get(event_id, None)
